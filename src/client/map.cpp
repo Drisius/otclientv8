@@ -617,8 +617,8 @@ std::vector<CreaturePtr> Map::getSpectatorsInRangeEx(const Position& centerPos, 
     std::vector<CreaturePtr> creatures;
 
     if(multiFloor) {
-        minZRange = centerPos.z - getFirstAwareFloor();
-        maxZRange = getLastAwareFloor() - centerPos.z;
+        minZRange = Otc::MIN_Z;
+        maxZRange = Otc::MAX_Z;
     }
 
     //TODO: optimize
@@ -824,18 +824,12 @@ void Map::resetAwareRange()
 
 int Map::getFirstAwareFloor()
 {
-    if(m_centralPosition.z > Otc::SEA_FLOOR)
-        return m_centralPosition.z-Otc::AWARE_UNDEGROUND_FLOOR_RANGE;
-    else
-        return 0;
+    return Otc::MIN_Z;
 }
 
 int Map::getLastAwareFloor()
 {
-    if(m_centralPosition.z > Otc::SEA_FLOOR)
-        return std::min<int>(m_centralPosition.z+Otc::AWARE_UNDEGROUND_FLOOR_RANGE, (int)Otc::MAX_Z);
-    else
-        return Otc::SEA_FLOOR;
+    return Otc::MAX_Z;
 }
 
 std::tuple<std::vector<Otc::Direction>, Otc::PathFindResult> Map::findPath(const Position& startPos, const Position& goalPos, int maxComplexity, int flags)

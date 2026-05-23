@@ -81,6 +81,8 @@ public:
     void setMinimumAmbientLight(float intensity) { m_minimumAmbientLight = intensity; }
     float getMinimumAmbientLight() { return m_minimumAmbientLight; }
 
+    bool isCovered(Position playerPosition);
+
     // drawing related
     void setDrawFlags(Otc::DrawFlags drawFlags) { m_drawFlags = drawFlags; requestVisibleTilesCacheUpdate(); }
     Otc::DrawFlags getDrawFlags() { return m_drawFlags; }

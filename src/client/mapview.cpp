@@ -123,8 +123,15 @@ void MapView::drawMapBackground(const Rect& rect, const TilePtr& crosshairTile) 
 
     if (m_drawLight) {
         Light ambientLight;
-        if (cameraPosition.z <= Otc::SEA_FLOOR)
+
+        if (cameraPosition.z > Otc::SEA_FLOOR && isCovered(cameraPosition)) {
+            ambientLight.intensity = 0;
+            ambientLight.color = 215;
+        }
+        else {
             ambientLight = g_map.getLight();
+        }
+
         if (!m_lightTexture || m_lightTexture->getSize() != m_drawDimension)
             m_lightTexture = std::make_shared<Texture>(m_drawDimension, false, true);
         m_lightView = std::make_unique<LightView>(m_lightTexture, m_drawDimension, rect, srcRect, ambientLight.color,
@@ -590,10 +597,6 @@ int MapView::calcFirstVisibleFloor(bool forFading)
                 // if nothing is limiting the view, the first visible floor is 0
                 int firstFloor = 0;
 
-                // limits to underground floors while under sea level
-                if(cameraPosition.z > Otc::SEA_FLOOR)
-                    firstFloor = std::max<int>(cameraPosition.z - Otc::AWARE_UNDEGROUND_FLOOR_RANGE, (int)Otc::UNDERGROUND_FLOOR);
-
                 // loop in 3x3 tiles around the camera
                 for(int ix = -1; ix <= 1 && firstFloor < cameraPosition.z && !forFading; ++ix) {
                     for(int iy = -1; iy <= 1 && firstFloor < cameraPosition.z; ++iy) {
@@ -634,27 +637,11 @@ int MapView::calcFirstVisibleFloor(bool forFading)
 
 int MapView::calcLastVisibleFloor()
 {
-    if(!m_multifloor)
+    if (!m_multifloor) {
         return calcFirstVisibleFloor();
-
-    int z = 7;
-
-    Position cameraPosition = getCameraPosition();
-    // this could happens if the player is not known yet
-    if(cameraPosition.isValid()) {
-        // view only underground floors when below sea level
-        if(cameraPosition.z > Otc::SEA_FLOOR)
-            z = cameraPosition.z + Otc::AWARE_UNDEGROUND_FLOOR_RANGE;
-        else
-            z = Otc::SEA_FLOOR;
     }
-
-    if(m_lockedFirstVisibleFloor != -1)
-        z = std::max<int>(m_lockedFirstVisibleFloor, z);
-
-    // just ensure the that the floor is in the valid range
-    z = stdext::clamp<int>(z, 0, (int)Otc::MAX_Z);
-    return z;
+      
+    return Otc::MAX_Z;
 }
 
 Point MapView::transformPositionTo2D(const Position& position, const Position& relativePosition) {
@@ -686,3 +673,16 @@ void MapView::setCrosshair(const std::string& file)
 }
 
 /* vim: set ts=4 sw=4 et: */
+
+bool MapView::isCovered(Position playerPosition) {
+    Position abovePlayerPosition = playerPosition;
+    --abovePlayerPosition.z;
+    TilePtr abovePlayerTile;
+    for (abovePlayerPosition.z; abovePlayerPosition.z > 0; --abovePlayerPosition.z) {
+        abovePlayerTile = g_map.getTile(abovePlayerPosition);
+        if (abovePlayerTile && abovePlayerTile->isFullGround()) {
+            return true;
+        }
+    }
+    return false;
+}

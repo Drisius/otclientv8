@@ -51,4 +51,5 @@ function load()
     g_game.setClientVersion(0)
     g_game.setProtocolVersion(0)
   end
+  g_things.loadOtml('things.otml')
 end

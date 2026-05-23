@@ -54,7 +54,11 @@ function updateFeatures(version)
     end
 
     if(version >= 860) then
+		g_game.enableFeature(GameSpritesU32)
         g_game.enableFeature(GameAttackSeq)
+		g_game.enableFeature(GameMagicEffectU16)
+		g_game.enableFeature(GameSlowerManualWalking)
+		-- g_game.setMaxPreWalkingSteps()
     end
 
     if(version >= 862) then
