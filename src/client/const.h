@@ -188,28 +188,8 @@ namespace Otc
         FluidGreen,
         FluidYellow,
         FluidWhite,
-        FluidPurple
-    };
-
-    enum FluidsType {
-        FluidNone = 0,
-        FluidWater,
-        FluidMana,
-        FluidBeer,
-        FluidOil,
-        FluidBlood,
-        FluidSlime,
-        FluidMud,
-        FluidLemonade,
-        FluidMilk,
-        FluidWine,
-        FluidHealth,
-        FluidUrine,
-        FluidRum,
-        FluidFruidJuice,
-        FluidCoconutMilk,
-        FluidTea,
-        FluidMead
+        FluidPurple,
+        FluidBlack
     };
 
     enum FightModes {

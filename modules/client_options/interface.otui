@@ -13,7 +13,7 @@ OptionPanel
       margin-top: 7
       color: #c0c0c0
       font: verdana-11px-monochrome
-      !text: tr("Layout (requries client restart)")
+      !text: tr("Layout (requires client restart)")
       $mobile:
         visible: false
 

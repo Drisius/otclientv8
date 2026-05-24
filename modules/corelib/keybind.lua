@@ -23,10 +23,10 @@ Keybind = {
   chatMode = CHAT_MODE.ON,
 
   reservedKeys = {
-    ["Up"] = true,
-    ["Down"] = true,
-    ["Left"] = true,
-    ["Right"] = true
+    ["Up"] = false,
+    ["Down"] = false,
+    ["Left"] = false,
+    ["Right"] = false
   }
 }
 
