@@ -136,10 +136,10 @@ function onGameStart()
 end
 
 function bindKeys()
-  --bindDefaultWalkKey("Up", North)
-  --bindDefaultWalkKey("Right", East)
-  --bindDefaultWalkKey("Down", South)
-  --bindDefaultWalkKey("Left", West)
+  bindDefaultWalkKey("Up", North)
+  bindDefaultWalkKey("Right", East)
+  bindDefaultWalkKey("Down", South)
+  bindDefaultWalkKey("Left", West)
 
   bindTurnKeys()
 
@@ -149,10 +149,10 @@ function bindKeys()
 end
 
 function unbindKeys()
-  --unbindDefaultWalkKey("Up")
-  --unbindDefaultWalkKey("Right")
-  --unbindDefaultWalkKey("Down")
-  --unbindDefaultWalkKey("Left")
+  unbindDefaultWalkKey("Up")
+  unbindDefaultWalkKey("Right")
+  unbindDefaultWalkKey("Down")
+  unbindDefaultWalkKey("Left")
 
   unbindTurnKeys()
 
